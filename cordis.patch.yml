@@ -1,0 +1,13 @@
+# Bundle patch for dsh-ui-video-background.
+#
+# This row is what makes the package a profile LAYER instead of an inert
+# dependency: `dsh.profile.bundles` in the profile's package.json is composed
+# into the loader tree, and each bundle's `dsh.bundle.patch` file is applied in
+# bundle order, below the user's own cordis.patch.yml.
+#
+# Host half only: the whole effect is two index rows (one <style>, one
+# synchronous <script>) plus one streamed-video route, so there is no
+# `dsh.client` block and nothing to inject into the client module graph.
+- insert:
+    - id: ui-video-bg
+      name: dsh-ui-video-background

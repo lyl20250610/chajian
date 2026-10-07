@@ -1,6 +1,6 @@
 {
   "name": "dsh-ui-video-background",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "给 DSH（DeepSeek Harness）界面铺一段本地视频当动态背景，并把面板做成液态玻璃：宿主注入首屏 <video> 层，用 color-mix 把大面板令牌改半透明，脚本按结构给半透明面板挂 backdrop-blur + 高光边缘，亮/暗主题各自适配，改配置刷新即生效。",
   "type": "module",
   "main": "./lib/index.js",

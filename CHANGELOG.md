@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.3
+
+- 修复「加了遮罩还是看不见」的真凶：**应用外壳被我们自己的玻璃类糊住了**。diag 实证——`tagGlass` 跑在 `sweepClear` 之前，全窗口 frame 带着半透明背景先被打上玻璃，从此自带 `backdrop-filter`；而 sweepClear 的规则是「已有 filter 就跳过」，于是它永远逃过清零，整扇窗口压着一层 74% 白洗 + 24px 模糊，video 和 scrim 全被糊掉。
+- 修法：打标顺序改为**先清零、后打玻璃**；`tagGlass` 另外跳过①已带 clear 类的元素、②任一边 ≥95% 视口的结构性元素（双保险）。结构性层的透明度归遮罩层管，玻璃只留给真正的面板。
+- `~/.dsh/ui-video-background/style.css` 同时也是应急覆盖通道：本次正是用 `html.dsh-uivb .dsh-uivb-glass[class*="_frame"]{backdrop-filter:none !important;background-color:transparent !important}` 免重启热修的——记下这条，下次遇到同类问题可以先写覆盖、刷新验证，再落到代码里。
+
 ## 0.2.2
 
 - 修复「视频又看不见了」的真实根因：0.2.1 只清零**完全不透明**的满屏容器，被令牌改成 68% 半透明的外壳/列容器却全被放过——三层 68% **相乘**后视频只剩约 3%。改为**单遮罩（scrim）模型**：新增 `.dsh-uivb-scrim`（fixed 全屏、z-index:-1、带十六进制 alpha 的纯色——surfaceAlpha 0.68 即亮 `#ffffffad` / 暗 `#151517ad`），视频降到 z-index:-2——视频可见度只由这一层承担，不再逐层相乘。scrim 挂在 `<html>` 下、看不到 `body` 的令牌，所以色值是硬编码的。

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "AI Token Saver",
+    "description": "Meter every model call, keep a rolling AI session digest for new sessions, and nudge the official compaction engine before the context window fills up."
+  }
+}

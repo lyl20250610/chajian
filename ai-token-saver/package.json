@@ -1,0 +1,54 @@
+{
+  "name": "dsh-ai-token-saver",
+  "version": "0.1.0",
+  "description": "给 DSH（DeepSeek Harness）装上 token 记账、滚动 AI 会话摘要与提前压缩提醒：在 llm/stream 瀑布上只读观察每一次模型调用的真实用量（含缓存命中），turn 结束后把「旧摘要 + 新对话」合并成可跨会话复用的紧凑摘要，会话压力超过阈值时提醒、可选提前触发官方压缩引擎。零依赖，不冻结请求，不改写历史。",
+  "type": "module",
+  "main": "./lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyl20250610/chajian.git",
+    "directory": "ai-token-saver"
+  },
+  "author": "lyl20250610",
+  "homepage": "https://github.com/lyl20250610/chajian/tree/main/ai-token-saver#readme",
+  "bugs": {
+    "url": "https://github.com/lyl20250610/chajian/issues"
+  },
+  "exports": {
+    ".": "./lib/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "locale",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "cordis",
+    "tokens",
+    "usage",
+    "meter",
+    "context",
+    "digest",
+    "compaction"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "engines": {
+      "dsh": ">=0.2.0-rc.1"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

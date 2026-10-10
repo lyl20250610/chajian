@@ -82,3 +82,9 @@ Config at `~/.dsh/ui-video-background/config.json`: `enabled`; `video` (absolute
 How it works: the app declares its palette on `body` via alias tokens; the plugin redefines the big surface aliases as `color-mix(in srgb, <static token> A%, transparent) !important` (non-circular — it references the static palette; `!important` — the app declares on the same element). A `position:fixed; z-index:-1` video sits under the translucent panels, streamed same-origin with Range support. The frosting is applied structurally — the script tags large-enough elements whose computed background is translucent, with no own `backdrop-filter` and no tagged ancestor — so nothing depends on hashed class names, and menus (already native glass at `blur(40px) saturate(150%)`) are skipped. One pure `buildStyle` function is serialized into the page so host and client share a single source of truth; the page fetches the live config and overrides the baked style, hence refresh-only tuning.
 
 `assets/background.mp4` is a trial sample only; it is not covered by the MIT license. Delete it before redistributing.
+
+---
+
+## 本仓库的其他插件 / Other plugins in this repo
+
+- [`ai-token-saver/`](./ai-token-saver/) — **dsh-ai-token-saver**：token 记账 + 滚动 AI 会话摘要 + 提前驱动官方压缩，让长会话和新会话都更省 token。Token metering, a rolling AI session digest, and an opt-in early nudge to the official compaction engine.

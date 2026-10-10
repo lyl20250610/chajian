@@ -1,0 +1,10 @@
+# Bundle patch for dsh-ai-token-saver.
+#
+# Same mechanism as the sibling dsh-ui-video-background: this row is what makes
+# the package a profile LAYER instead of an inert dependency — each bundle's
+# `dsh.bundle.patch` file is applied in bundle order, below the user's own
+# cordis.patch.yml. One loader-tree row, zero client-side code: everything in
+# this plugin rides host services (`llm`, optionally `compaction`/`webServer`).
+- insert:
+    - id: ai-token-saver
+      name: dsh-ai-token-saver

@@ -27,7 +27,11 @@ dsh plugin --profile web add "git+https://ghproxy.net/https://github.com/lyl2025
 dsh plugin --profile web add file:/path/to/chajian/ai-token-saver
 ```
 
-桌面版：在 **设置 → 插件** 里安装（CLI 对 desktop profile 有防呆，会拒绝直接写桌面端 profile）。安装/升级后**重启 DSH**，与仓库内其他插件一致。
+桌面版（Electron）：桌面 profile 同样挂 `@deepseek-ai/dsh-web-app`（有 `webServer`，stats 路由可用），插件代码无需任何改动，差别只在**安装方式**——CLI 对 desktop profile 有防呆（拒绝直接写），且桌面 profile 没有 `patchReload: live`，装完必须重启应用：
+
+- **推荐**：应用内 **设置 → 插件** 安装，规格填 `git+https://github.com/lyl20250610/chajian.git#path:ai-token-saver`，或本地路径（`file:`/`link:` 均可，如打包好的 tgz）。
+- **手动**（等效于 GUI，适合脚本化）：**先完全退出应用（含托盘）**，再对 `~/.dsh/profiles/desktop` 依次执行 `pnpm add <tgz|git规格>`、把 `dsh-ai-token-saver` 追加进 `package.json` 的 `dsh.profile.bundles` 数组——应用运行中不要动 profile（它退出时可能回写 package.json，改动会被吞掉）。
+- 兼容性预检用的 `dsh.engines.dsh` 范围（`>=0.2.0-rc.1`）与运行时（0.2.0-rc.2 实测）匹配；若宿主更旧触发预检拦截，用 `dsh plugin --profile desktop allow-version ... --accept-risk` 显式豁免。
 
 > `#path:` 是 pnpm 的 git 子目录规格；若你的宿主版本对 git URL 的处理不支持它，用 `file:` 本地路径安装是保底方案（插件管理器明确支持 `file:`/`link:`）。
 
@@ -111,3 +115,5 @@ How it works: loop requests are derived from the durable session log and arrive 
 Honest boundaries: the actual savings come from the official compaction engine plus you reusing the digest; this plugin adds transparency, an automated cross-session digest, and an earlier trigger. The digest costs one model call (visible in the ledger); the 50k default threshold keeps it profitable. `promptTokensEst` is a chars/4 rough estimate for relative comparison only — exact numbers always come from `usage`.
 
 Requires `dsh >= 0.2.0-rc.1`, Node ≥ 20. Independent of the sibling `dsh-ui-video-background`; install or remove either alone. MIT (repo root LICENSE).
+
+Desktop (Electron): the desktop profile also mounts `@deepseek-ai/dsh-web-app` (so `webServer` and the stats route exist) and the plugin code needs no changes there — only the install path differs. The CLI refuses to write the desktop profile by design, and desktop has no `patchReload: live`, so a full app restart (tray included) is required. Recommended: install via in-app Settings → Plugins with the `git+...#path:ai-token-saver` spec or a local `file:`/`link:` path. Manual/scripted equivalent: fully quit the app first, then `pnpm add <tgz|spec>` inside `~/.dsh/profiles/desktop` and append `dsh-ai-token-saver` to `dsh.profile.bundles` — never edit the profile while the app runs, it may rewrite package.json on exit and swallow the change. Verified against runtime 0.2.0-rc.2; the `dsh.engines.dsh >= 0.2.0-rc.1` range passes preflight.

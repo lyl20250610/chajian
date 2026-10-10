@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- 桌面端（Electron）适配说明：桌面 profile 同挂 `dsh-web-app`，`webServer`/stats 路由可用，代码零改动；补安装路径（GUI / 退出应用后手动 pnpm add + bundles 追加）与兼容性预检说明（runtime 0.2.0-rc.2 实测通过）。纯文档版本，无代码变更。
+
 ## 0.1.0
 
 - 初始版本。三个模块，全部走官方接缝、零 npm 依赖：
@@ -8,3 +12,7 @@
   - **提前压缩提醒**：用 `ctx.llm.resolveModelInfo`（按路由缓存 10 分钟）取上下文窗口，压力 = 最近一次 loop 调用计费输入 ÷ 窗口；超 `pressure.ratio` 记入 stats 提醒；`pressure.autoCompact` 打开时在 `agent/pre-step` 调用**官方** `ctx.compaction.compactIfNeeded(agent, 'pressure', signal)`（与 compaction-basic 同一姿势，压不压由引擎决定），冷却 `cooldownMinutes`。
 - 配置在 `~/.dsh/ai-token-saver/config.json`（首载生成、读入钳制、坏文件降级默认值）；`enabled=false` 时什么都不注册，与兄弟插件 dsh-ui-video-background 的开关语义一致。
 - 明确不做的事：不改写冻结请求、不自研压缩引擎替换官方接缝、不向对话流注入任何内容。
+
+## 0.1.1
+
+- 桌面端（Electron）适配说明：桌面 profile 同挂 `dsh-web-app`，`webServer`/stats 路由可用，代码零改动；补安装路径（GUI / 退出应用后手动 pnpm add + bundles 追加）与兼容性预检说明（runtime 0.2.0-rc.2 实测通过）。纯文档版本，无代码变更。

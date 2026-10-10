@@ -1,6 +1,6 @@
 {
   "name": "dsh-ai-token-saver",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "给 DSH（DeepSeek Harness）装上 token 记账、滚动 AI 会话摘要与提前压缩提醒：在 llm/stream 瀑布上只读观察每一次模型调用的真实用量（含缓存命中），turn 结束后把「旧摘要 + 新对话」合并成可跨会话复用的紧凑摘要，会话压力超过阈值时提醒、可选提前触发官方压缩引擎。零依赖，不冻结请求，不改写历史。",
   "type": "module",
   "main": "./lib/index.js",
